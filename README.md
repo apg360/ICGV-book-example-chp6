@@ -1,5 +1,5 @@
 # Introduction to Computer Graphics and the Vulkan API Third Edition by Kenwright
-## Chapter 6 example source code
+## Source code of Chapter 6 example 
 
 ### ![alt BookImage](https://github.com/apg360/ICGV-book-example-chp6/blob/main/cover.jpg)
 
