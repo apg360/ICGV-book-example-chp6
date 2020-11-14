@@ -13,3 +13,8 @@ There are personal modifications and not 100% as in the book, a quick list :
 * #### Removed the Windows API
 * #### We use Volk as Vulkan loader
 * #### Use third party library for logging : dlg
+
+_
+
+
+/!\ Currently a **work in progress** under Apple Macbook Air, macOS Catalina 10.15.6  with "Intel(R) Iris(TM) Graphics 6000"  /!\ 
