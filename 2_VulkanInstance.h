@@ -266,7 +266,7 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
             debugReportCreateInfo.pfnCallback                        = funcDebugReportCallback;//&MyDebugReportCallback;
             
             // Setup error callback function notifications
-            dlg_warn("HERE1");
+            /*
             VkResult result = 
               vkCreateDebugReportCallbackEXT ( *outInstance,
                                                      // Valid VkIstance handle
@@ -276,13 +276,13 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
                                                      // If pointer is not NULL then allocator callback manager
                                                      &debugReportCallback_Error);
                                                      // pointer to a VkCreateDebugReportCallbackEXT handle
-            dlg_warn("HERE2");
-            ERR_VULKAN_EXIT(result, "VkCreateDebugReportCallbackEXT(ERROR) failed " );
             
+            ERR_VULKAN_EXIT(result, "VkCreateDebugReportCallbackEXT(ERROR) failed " );
+            */
             // Capture warning as well as errors
             debugReportCreateInfo.flags = VK_DEBUG_REPORT_WARNING_BIT_EXT | VK_DEBUG_REPORT_PERFORMANCE_WARNING_BIT_EXT;
             debugReportCreateInfo.pfnCallback = funcDebugReportCallback;//&MyDebugReportCallback;
-            
+            /*
             // Setup warning callback function notifications
             result = 
               vkCreateDebugReportCallbackEXT ( *outInstance,
@@ -294,7 +294,6 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
                                                      &debugReportCallback_Warning);
                                                      // pointer to a VkCreateDebugReportCallbackEXT handle
             
-            dlg_warn("HERE3");
             ERR_VULKAN_EXIT(result, "VkCreateDebugReportCallbackEXT(WARN) failed " );
             switch (result) {
             case VK_SUCCESS:
@@ -305,7 +304,7 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
             default:
                 ERR_EXIT("CreateDebugReportCallback Failure: unknown failure\n");
                 break;
-            }
+            }*/
             
             // Debug utils
             //PFN_VkDebugUtilsMessengerCreateInfoEXT  VkDebugUtilsMessengerCreateInfoEXT = NULL;
