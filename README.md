@@ -8,7 +8,7 @@ This is for those who own the book and are learning it. Instead of typing all th
 
 There are personal modifications and not 100% as in the book, a quick list :
 
-* #### Built 100% with C and not C++. To my knowledge this is second Vulkan example in C after the GLFW examples.
+* #### Built 100% with C and not C++. To my knowledge this is the second Vulkan example in C after the GLFW vulkan example.
 * #### Removed the Windows API for window. Instead use GLFW
 * #### Removed the Windows API
 * #### We use Volk as Vulkan loader
