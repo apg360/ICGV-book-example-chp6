@@ -166,7 +166,7 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
        e.g., VK_LAYER_NV_optimus or VK_LAYER_LUNARG_standard_validation
     */
     
-    const char *layers[] = { "VK_LAYER_KHRONOS_validation" }; //"VK_LAYER_NV_optimus" or "VK_LAYER_LUNARG_standard_validation"
+    const char *layers[] = { "VK_LAYER_KHRONOS_validation" }; // "VK_LAYER_LUNARG_standard_validation" or "VK_LAYER_NV_optimus"
     
     if (COUNT_ARRAY_ELEMS(layers) != 0) dlg_info("Size of Vulkan instance enabled layers : %u", COUNT_ARRAY_ELEMS(layers));
     
