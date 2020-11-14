@@ -1,0 +1,6 @@
+/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/test/cmake_using_subdir_static/_build/CMakeFiles/rebuild_cache.dir
+/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/test/cmake_using_subdir_static/_build/CMakeFiles/edit_cache.dir
+/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/test/cmake_using_subdir_static/_build/CMakeFiles/volk_test.dir
+/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/test/cmake_using_subdir_static/_build/volk/CMakeFiles/rebuild_cache.dir
+/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/test/cmake_using_subdir_static/_build/volk/CMakeFiles/edit_cache.dir
+/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/test/cmake_using_subdir_static/_build/volk/CMakeFiles/volk.dir

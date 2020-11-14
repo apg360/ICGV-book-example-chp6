@@ -1,0 +1,12 @@
+
+To have latest Vulkan header version, do in SSH :
+./generate.py
+
+Do not forget to recompile everything :
+test/./run_tests.sh
+
+Last time run : 2020-OCT-04
+September 28, 2020 : Vulkan 1.2.155 spec update
+
+VOLK_HEADER_VERSION 155
+Vulkan 1.2.155 spec update

@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc  -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.15.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/volk_test.dir/main.c.o CMakeFiles/volk_test.dir/Users/a0/MyProjects/GitHub/buildTemplate/libs/volk-1.2.140/volk.c.o -o volk_test  -Wl,-rpath,/usr/local/lib -ldl /usr/local/lib/libvulkan.dylib 
