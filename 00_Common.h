@@ -1,6 +1,14 @@
 
 #pragma once // include guard
 
+#include <stdio.h>
+#include <stdlib.h>     // EXIT_FAILURE, EXIT_SUCCESS
+#include <assert.h>     // C++ DBG_ASSERT become assert
+#include <string.h>     // strcpy, strcmp, strcat(concatenates), etc...
+#include <dlg/dlg.h>    // logging
+#include <math.h>       // tanf
+
+
 /*
 #include <volk.h>
 //#define VK_EXT_metal_surface //VK_USE_PLATFORM_MACOS_MVK
@@ -9,7 +17,6 @@
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 */
-
 
 //Note that to avoid symbol conflicts, you have to make sure all translation units in your application include volk.h instead of vulkan.h, 
 //  or that you define VK_NO_PROTOTYPES project-wide to make sure you aren’t accidentally picking up symbols from the real Vulkan loader. 
@@ -24,13 +31,6 @@
 #include <volk.h>
 #include <GLFW/glfw3.h>
 
-
-#include <stdio.h>
-#include <stdlib.h>     // EXIT_FAILURE, EXIT_SUCCESS
-#include <assert.h>     // C++ DBG_ASSERT become assert
-#include <string.h>     // strcpy, strcmp, strcat(concatenates), etc...
-#include <dlg/dlg.h>    // logging
-#include <math.h>       // tanf
 
 //Check vulkan error and exit application
 #define ERR_VULKAN_EXIT(val, err_msg)               \
