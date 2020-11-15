@@ -168,7 +168,7 @@ void SetupRenderPass(VkDevice          device,
         #endif // DEPTH_BUFFER
         
         // 0 - color screen buffer
-        VkAttachmentDescription pass[2]     = {};
+        VkAttachmentDescription pass[1]     = {};
         pass[0].format                      = VK_FORMAT_B8G8R8A8_UNORM;
         pass[0].samples                     = VK_SAMPLE_COUNT_1_BIT;
         pass[0].loadOp                      = VK_ATTACHMENT_LOAD_OP_CLEAR;
@@ -178,19 +178,22 @@ void SetupRenderPass(VkDevice          device,
         pass[0].initialLayout               = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         pass[0].finalLayout                 = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         
+        #ifdef DEPTH_BUFFER
+          VkAttachmentDescription pass[2]     = {};
+          // 1 - depth buffer
+          pass[1].format                      = VK_FORMAT_D16_UNORM;
+          pass[1].samples                     = VK_SAMPLE_COUNT_1_BIT;
+          pass[1].loadOp                      = VK_ATTACHMENT_LOAD_OP_CLEAR;
+          pass[1].storeOp                     = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+          pass[1].stencilLoadOp               = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
+          pass[1].stencilStoreOp              = VK_ATTACHMENT_STORE_OP_DONT_CARE;
+          pass[1].initialLayout               = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+          pass[1].finalLayout                 = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+        #endif
+        
         VkAttachmentReference car           = {};
         car.attachment                      = 0;
         car.layout                          = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-        
-        // 1 - depth buffer
-        pass[1].format                      = VK_FORMAT_D16_UNORM;
-        pass[1].samples                     = VK_SAMPLE_COUNT_1_BIT;
-        pass[1].loadOp                      = VK_ATTACHMENT_LOAD_OP_CLEAR;
-        pass[1].storeOp                     = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        pass[1].stencilLoadOp               = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
-        pass[1].stencilStoreOp              = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        pass[1].initialLayout               = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-        pass[1].finalLayout                 = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
         
         // create the one main subpass of your renderpass:
         VkSubpassDescription subpass        = {};
@@ -209,10 +212,7 @@ void SetupRenderPass(VkDevice          device,
         // create your main renderpass
         VkRenderPassCreateInfo rpci         = {};
         rpci.sType                          = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-        rpci.attachmentCount                = 1; // color
-        #ifdef DEPTH_BUFFER
-          rpci.attachmentCount                = 2; // color and depth
-        #endif
+        rpci.attachmentCount                = COUNT_ARRAY_ELEMS(pass); // color (+depth if def DEPTH_BUFFER)
         rpci.pAttachments                   = pass;
         rpci.subpassCount                   = 1;
         rpci.pSubpasses                     = &subpass;
@@ -240,19 +240,16 @@ void SetupRenderPass(VkDevice          device,
         VkFramebufferCreateInfo fbci  = {};
         fbci.sType                    = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
         fbci.renderPass               = *outRenderPass;
-        // must be equal to the attachment count on render pass
-        fbci.attachmentCount          = 1;
-        #ifdef DEPTH_BUFFER
-          fbci.attachmentCount          = 2;
-        #endif
+        // must be equal to the attachment count on render pass : rpci.attachmentCount
+        fbci.attachmentCount          = rpci.attachmentCount;
         fbci.pAttachments             = frameBufferAttachments;
         fbci.width                    = width;
         fbci.height                   = height;
         fbci.layers                   = 1;
         
         // Create a framebuffer per swap-chain imageView:
-        *outFrameBuffers = malloc( 2 * sizeof(VkFramebuffer) );
-        for( uint32_t index = 0; index < 2; ++index )
+        *outFrameBuffers = malloc( 1 * sizeof(VkFramebuffer) );
+        for( uint32_t index = 0; index < 1; ++index )
         {
             frameBufferAttachments[0] = presentImageViews[index];
             #ifdef DEPTH_BUFFER

@@ -22,13 +22,14 @@ void RenderLoop(VkDevice          device,
                 VkPipeline        pipeline)
 {
     dlg_warn("Welcome RenderLoop");
-    uint32_t nextImageIdx;
-    vkAcquireNextImageKHR( device,
+    uint32_t nextImageIdx = 0;
+    /*vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
                            VK_NULL_HANDLE,
                            VK_NULL_HANDLE,
-                           &nextImageIdx );
+                           &nextImageIdx );*/
+    dlg_warn("nextImageIdx = %u", nextImageIdx);
     
     VkCommandBufferBeginInfo beginInfo                         = {};
     beginInfo.sType                                            = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
