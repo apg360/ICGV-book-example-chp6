@@ -156,10 +156,17 @@ int main(int argc, char *argv[]) {
      //vkDestroyDebugUtilsMessengerEXT(instance, debugUtilsMessenger, NULL);
      vkDestroyDebugReportCallbackEXT(instance, debugReportCallback_Warning, NULL);
      vkDestroyDebugReportCallbackEXT(instance, debugReportCallback_Error, NULL);
+     
+     //Cleanup (for every "malloc" there must be a "free"
+     free(frameBuffers);
+     free(renderPass);
+     free(frameBuffers);
+     free(presentImages);
+     free(presentImageViews);
+
      vkDestroyInstance(instance, NULL);
      glfwDestroyWindow(windowHandle);
      glfwTerminate();
-
 
 // End
     return EXIT_SUCCESS;

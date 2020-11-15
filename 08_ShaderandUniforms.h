@@ -82,6 +82,7 @@ void SetupShaderandUniforms(VkDevice          device,
         
         ERR_VULKAN_EXIT( result, "Failed to create vertex shader module." );
         
+        //Cleanup (for every "malloc" there must be a "free"
         free(code);
         code=NULL;
     }

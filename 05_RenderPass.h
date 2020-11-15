@@ -175,8 +175,8 @@ void SetupRenderPass(VkDevice          device,
         pass[0].storeOp                     = VK_ATTACHMENT_STORE_OP_STORE;
         pass[0].stencilLoadOp               = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
         pass[0].stencilStoreOp              = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        pass[0].initialLayout               = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-        pass[0].finalLayout                 = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        pass[0].initialLayout               = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR; //VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        pass[0].finalLayout                 = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR; //VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         
         #ifdef DEPTH_BUFFER
           VkAttachmentDescription pass[2]     = {};
@@ -193,7 +193,7 @@ void SetupRenderPass(VkDevice          device,
         
         VkAttachmentReference car           = {};
         car.attachment                      = 0;
-        car.layout                          = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        car.layout                          = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR; //VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         
         // create the one main subpass of your renderpass:
         VkSubpassDescription subpass        = {};
@@ -248,8 +248,8 @@ void SetupRenderPass(VkDevice          device,
         fbci.layers                   = 1;
         
         // Create a framebuffer per swap-chain imageView:
-        *outFrameBuffers = malloc( 1 * sizeof(VkFramebuffer) );
-        for( uint32_t index = 0; index < 1; ++index )
+        *outFrameBuffers = malloc( 2 * sizeof(VkFramebuffer) );
+        for( uint32_t index = 0; index < 2; ++index )
         {
             frameBufferAttachments[0] = presentImageViews[index];
             #ifdef DEPTH_BUFFER
@@ -270,5 +270,6 @@ void SetupRenderPass(VkDevice          device,
             dlg_warn("after vkCreateFramebuffer");
             ERR_VULKAN_EXIT( result, "Failed to create framebuffer." );
         }//END FOR LOOP index
+    
 }//END SetupRenderPass(..)
 

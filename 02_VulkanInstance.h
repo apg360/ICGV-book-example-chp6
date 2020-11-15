@@ -385,5 +385,9 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
     }
     //--//--//--//
     
+    //Cleanup (for every "malloc" there must be a "free"
+    free(instanceLayers);
+    free(instanceExtension);
+    
 }// END SetupVulkanInstance(..)
 

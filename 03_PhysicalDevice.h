@@ -127,4 +127,8 @@ void SetupPhysicalDevice(VkInstance           instance,
         //allows you to get quick gains without changing your code, but isn’t suitable for applications that want to use explicit multi-GPU
         volkLoadDevice(*outDevice);
         
+        
+        //Cleanup (for every "malloc" there must be a "free"
+        free(physicalDevices);
+        
 }// END SetupPhysicalDevice(..)

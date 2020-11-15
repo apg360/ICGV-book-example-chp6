@@ -146,6 +146,9 @@ void SetupSwapChain(VkDevice          device,
                                    // resulting swapchain
             
             ERR_VULKAN_EXIT(result, "Failed to create swapchain." );
+            
+            //Cleanup (for every "malloc" there must be a "free"
+            free(present_modes);
         }//END Create Swap-Chain
         //--//--//--//
         {
@@ -217,5 +220,8 @@ void SetupSwapChain(VkDevice          device,
             }//END for loop
         }
         //--//--//--//
+        
+        //Cleanup (for every "malloc" there must be a "free"
+        free(supportsPresent);
         
 }//END SetupSwapChain(..)

@@ -22,14 +22,14 @@ void RenderLoop(VkDevice          device,
                 VkPipeline        pipeline)
 {
     dlg_warn("Welcome RenderLoop");
-    uint32_t nextImageIdx = 0;
+    uint32_t nextImageIdx =0;
     /*vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
                            VK_NULL_HANDLE,
                            VK_NULL_HANDLE,
                            &nextImageIdx );*/
-    dlg_warn("nextImageIdx = %u", nextImageIdx);
+    dlg_error("nextImageIdx = %u", nextImageIdx);
     
     VkCommandBufferBeginInfo beginInfo                         = {};
     beginInfo.sType                                            = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
@@ -50,12 +50,10 @@ void RenderLoop(VkDevice          device,
     renderPassBeginInfo.renderArea                             = c;
     renderPassBeginInfo.clearValueCount                        = 2;
     renderPassBeginInfo.pClearValues                           = clearValue;
-    /*XXXX*/
     
     vkCmdBeginRenderPass( commandBuffer,
                           &renderPassBeginInfo,
                           VK_SUBPASS_CONTENTS_INLINE );
-    /*XXXX*/
     // bind the graphics pipeline to the command buffer.
     // Any vkDraw command afterwards is affected by this pipeline.
     
@@ -110,7 +108,6 @@ void RenderLoop(VkDevice          device,
     vkCmdEndRenderPass( commandBuffer );
     
     vkEndCommandBuffer( commandBuffer );
-    /*XXXX*/
     
     // present:
     VkFence renderFence;
@@ -151,7 +148,6 @@ void RenderLoop(VkDevice          device,
                    // pointer to an array of VkSubmitInfo structures, each specifying a command buffer submission batch
                    renderFence );
                    // handle to a fence to be signaled once all submitted command buffers have completed execution
-    /*XXXX*/
     
     // Wait for the command/queue to finish
     
@@ -159,6 +155,7 @@ void RenderLoop(VkDevice          device,
     
     vkDestroyFence( device, renderFence, NULL );
     
+    dlg_warn("calling vkQueuePresentKHR");
     // Present the backbuffer
     VkPresentInfoKHR presentInfo      = {};
     presentInfo.sType                 = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -169,7 +166,6 @@ void RenderLoop(VkDevice          device,
     presentInfo.pSwapchains           = &swapChain;
     presentInfo.pImageIndices         = &nextImageIdx;
     presentInfo.pResults              = NULL;
-    
     vkQueuePresentKHR( presentQueue, &presentInfo );
     
     /*glClearColor(0.2, 0.8, 0.3, 1.0);
@@ -184,5 +180,5 @@ void RenderLoop(VkDevice          device,
         glVertex3f(-0.8, -0.8, 0.0);
     glEnd();
     */
-    
+    dlg_warn("END RenderLoop");
 }//END RenderLoop(..)
