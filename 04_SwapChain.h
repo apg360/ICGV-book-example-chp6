@@ -16,6 +16,15 @@ void SetupSwapChain(VkDevice          device,
                     VkImage**         outPresentImages,
                     VkImageView**     outPresentImageViews)
 {
+        // Iterate over each queue to learn whether it supports presenting:
+        VkBool32* supportsPresent = malloc (1 * sizeof(VkBool32) );
+        for (uint32_t index = 0; index < 1; index++) {
+            vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, index, surface, &supportsPresent[index]);
+        }
+        for (uint32_t index = 0; index < 1; index++) {
+            dlg_info("PhysicalDevice Surface Support Presenting : %u", supportsPresent[index]);
+        }
+        
         // To display something you'll need to create a set of render buffers.
         // These buffers and their properties are called Swap-Chain
         //--//--//--//
@@ -23,18 +32,90 @@ void SetupSwapChain(VkDevice          device,
             // Create Swap-Chain
             VkSurfaceCapabilitiesKHR surfaceCapabilities = {};
             // You'll query the basic capabilities of the surface in order to create a swapchain
-            vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice,           // physicalDevice
+            VkResult
+              result = vkGetPhysicalDeviceSurfaceCapabilitiesKHR(physicalDevice,           // physicalDevice
                                                       // physical device that will be associated with the swapchain to be created
                                                       surface,                 // surface
                                                       // surface that will be associated with the swapchain
                                                       &surfaceCapabilities);   // pSurfaceCapabilities
                                                       // pointer to the VkSurfaceCapabilitiesKHR structure with retrieved data
+            ERR_VULKAN_EXIT(result, "Failed to get syrface capabilities." );
+            
+            //------- START the supported presentation modes for a surface
+            uint32_t present_modes_count = 0;
+            result =
+              vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &present_modes_count, NULL);
+
+            VkPresentModeKHR* present_modes = malloc( present_modes_count * sizeof(VkPresentModeKHR) );
+            result =
+              vkGetPhysicalDeviceSurfacePresentModesKHR(physicalDevice, surface, &present_modes_count, &present_modes[0]);
+            // Enumerate list of supported device present modes
+            for (uint32_t index = 0; index < present_modes_count; index++) {
+                dlg_info("Supported device present modes : %u", present_modes[index]);
+            }
+            /*
+            VK_PRESENT_MODE_IMMEDIATE_KHR = 0,
+            VK_PRESENT_MODE_MAILBOX_KHR = 1,
+            VK_PRESENT_MODE_FIFO_KHR = 2,
+            VK_PRESENT_MODE_FIFO_RELAXED_KHR = 3,
+            */
+            //------- END the supported presentation modes for a surface
+            
             VkExtent2D surfaceResolution   = surfaceCapabilities.currentExtent;
             *outWidth                      = surfaceResolution.width;
             *outHeight                     = surfaceResolution.height;
-            
             dlg_info("surface resolution width : %u", *outWidth);
             dlg_info("surface resolution height : %u", *outHeight );
+    /*
+    VkExtent2D swapchainExtent;
+    // width and height are either both 0xFFFFFFFF, or both not 0xFFFFFFFF.
+    if (surfaceCapabilities.currentExtent.width == 0xFFFFFFFF) {
+        // If the surface size is undefined, the size is set to the size
+        // of the images requested, which must fit within the minimum and
+        // maximum values.
+        swapchainExtent.width = 800;
+        swapchainExtent.height = 600;
+
+        if (swapchainExtent.width < surfaceCapabilities.minImageExtent.width) {
+            swapchainExtent.width = surfaceCapabilities.minImageExtent.width;
+        } else if (swapchainExtent.width > surfaceCapabilities.maxImageExtent.width) {
+            swapchainExtent.width = surfaceCapabilities.maxImageExtent.width;
+        }
+
+        if (swapchainExtent.height < surfaceCapabilities.minImageExtent.height) {
+            swapchainExtent.height = surfaceCapabilities.minImageExtent.height;
+        } else if (swapchainExtent.height > surfaceCapabilities.maxImageExtent.height) {
+            swapchainExtent.height = surfaceCapabilities.maxImageExtent.height;
+        }
+    } else {
+        // If the surface size is defined, the swap chain size must match
+        swapchainExtent = surfaceCapabilities.currentExtent;
+        *outWidth = surfaceCapabilities.currentExtent.width;
+        *outHeight = surfaceCapabilities.currentExtent.height;
+    }
+    */
+    VkPresentModeKHR swapchainPresentMode = VK_PRESENT_MODE_FIFO_KHR;
+
+    // Determine the number of VkImage's to use in the swap chain.
+    // Application desires to only acquire 1 image at a time (which is
+    // "surfCapabilities.minImageCount").
+    uint32_t desiredNumOfSwapchainImages = surfaceCapabilities.minImageCount;
+    // If maxImageCount is 0, we can ask for as many images as we want;
+    // otherwise we're limited to maxImageCount
+    if ((surfaceCapabilities.maxImageCount > 0) &&
+        (desiredNumOfSwapchainImages > surfaceCapabilities.maxImageCount)) {
+        // Application must settle for fewer images than desired:
+        desiredNumOfSwapchainImages = surfaceCapabilities.maxImageCount;
+    }
+
+    VkSurfaceTransformFlagsKHR preTransform;
+    if (surfaceCapabilities.supportedTransforms &
+        VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
+        preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+    } else {
+        preTransform = surfaceCapabilities.currentTransform;
+    }
+            
             
             VkSwapchainCreateInfoKHR ssci  = {};
             ssci.sType                     = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -43,18 +124,18 @@ void SetupSwapChain(VkDevice          device,
             ssci.minImageCount             = 2;
             ssci.imageFormat               = VK_FORMAT_B8G8R8A8_UNORM;
             ssci.imageColorSpace           = VK_COLORSPACE_SRGB_NONLINEAR_KHR;
-            ssci.imageExtent               = surfaceResolution;
+            ssci.imageExtent               = surfaceResolution; //swapchainExtent;
             ssci.imageArrayLayers          = 1;
             ssci.imageUsage                = VK_IMAGE_USAGE_COLOR_ATTACHMENT_BIT;
             ssci.imageSharingMode          = VK_SHARING_MODE_EXCLUSIVE;
-            ssci.preTransform              = 1;//VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+            ssci.preTransform              = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
             ssci.compositeAlpha            = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
-            ssci.presentMode               = VK_PRESENT_MODE_MAILBOX_KHR;
+            ssci.presentMode               = VK_PRESENT_MODE_IMMEDIATE_KHR;//VK_PRESENT_MODE_MAILBOX_KHR;
             // If you want clipping outside the extents
             ssci.clipped                   = true;
             ssci.oldSwapchain              = NULL;
             
-            VkResult result =
+            result =
               vkCreateSwapchainKHR( device,         // device
                                    // VkDevice to associate the swapchain
                                    &ssci,           // pCreateInfo
@@ -69,7 +150,7 @@ void SetupSwapChain(VkDevice          device,
         //--//--//--//
         {
             // Create your images 'double' buffering
-            uint32_t imageCount    =0;
+            uint32_t imageCount    = 0;
             // You'll need to obtain the array of presentable images associated
             // with the swapchain you created. First, you pass in 'NULL' to 
             // obtain the number of images (i.e., should be 2)
@@ -130,11 +211,10 @@ void SetupSwapChain(VkDevice          device,
                                      // pointer to instance of the VkImageViewCreateInfo structure containing parameters for the image view
                                      NULL,                 // pAllocator
                                      // optional controls host memory allocation
-                                     &(*outPresentImageViews[1])  );
+                                     &(*outPresentImageViews[index])  );
                                      // pointer to VkImageView handle for returned image view object
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
-            
         }
         //--//--//--//
         

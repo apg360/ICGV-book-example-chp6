@@ -21,7 +21,7 @@ void RenderLoop(VkDevice          device,
                 VkPipelineLayout  pipelineLayout,
                 VkPipeline        pipeline)
 {
-    
+    dlg_warn("Welcome RenderLoop");
     uint32_t nextImageIdx;
     vkAcquireNextImageKHR( device,
                            swapChain,
@@ -131,24 +131,14 @@ void RenderLoop(VkDevice          device,
     
     VkSubmitInfo submitInfo           = {};
     submitInfo.sType                  = VK_STRUCTURE_TYPE_SUBMIT_INFO;
-    submitInfo.waitSemaphoreCount     = 1;
+    submitInfo.waitSemaphoreCount     = 0;
     submitInfo.pWaitSemaphores        = VK_NULL_HANDLE;
     submitInfo.pWaitDstStageMask      = &waitStageMash;
-    submitInfo.commandBufferCount     = 0;
+    submitInfo.commandBufferCount     = 1;
     submitInfo.pCommandBuffers        = &commandBuffer;
     submitInfo.signalSemaphoreCount   = 0;
     submitInfo.pSignalSemaphores      = VK_NULL_HANDLE;
     
-    /*VkSubmitInfo submit_info = {.sType = VK_STRUCTURE_TYPE_SUBMIT_INFO,
-                                .pNext = NULL,
-                                .waitSemaphoreCount = 1,
-                                .pWaitSemaphores = &imageAcquiredSemaphore,
-                                .pWaitDstStageMask = &pipe_stage_flags,
-                                .commandBufferCount = 1,
-                                .pCommandBuffers = &demo->draw_cmd,
-                                .signalSemaphoreCount = 1,
-                                .pSignalSemaphores = &drawCompleteSemaphore};*/
-     
     // Submit command buffer (drawing)
     dlg_warn("calling vkQueueSubmit");
     //dlg_warn("commandBuffer = %u",&commandBuffer);
@@ -165,7 +155,6 @@ void RenderLoop(VkDevice          device,
     // Wait for the command/queue to finish
     
     vkWaitForFences( device, 1, &renderFence, VK_TRUE, UINT64_MAX );
-    
     
     vkDestroyFence( device, renderFence, NULL );
     

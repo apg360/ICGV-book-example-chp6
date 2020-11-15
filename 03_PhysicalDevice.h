@@ -90,7 +90,7 @@ void SetupPhysicalDevice(VkInstance           instance,
         
         // Same extension you specified when initializing Vulkan
         const char *deviceExtensions[]     = { "VK_KHR_swapchain" };
-        const char *layers[]               = {}; // "VK_LAYER_NV_optimus"
+        const char *layers[]               = { "VK_LAYER_KHRONOS_validation" }; // "VK_LAYER_LUNARG_standard_validation" or "VK_LAYER_NV_optimus"
         
         //
         VkDeviceCreateInfo dci             = {};

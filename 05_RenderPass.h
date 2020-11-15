@@ -1,6 +1,8 @@
 
 #pragma once // include guard
 
+//#define DEPTH_BUFFER
+
 //# -----------------------------------------------------
 // Step 5 - SetupRenderPass
 //
@@ -15,6 +17,7 @@ void SetupRenderPass(VkDevice          device,
                      VkRenderPass*     outRenderPass,
                      VkFramebuffer**   outFrameBuffers)
 {
+        dlg_warn("Welcome SetupRenderPass");
         // The render-pass defines the role of framebuffer resources
         
         
@@ -34,6 +37,7 @@ void SetupRenderPass(VkDevice          device,
         // Frame buffer
         // define your attachment points
         #ifdef DEPTH_BUFFER
+          dlg_info("DEPTH_BUFFER is defined !");
           // Extension (Depth Buffer)
           VkImage               depthImage           = NULL;
           VkImageView           depthImageView       = NULL;
@@ -47,7 +51,7 @@ void SetupRenderPass(VkDevice          device,
               VkExtent3D ef                          = { width, height, 1 };
               imageCreateInfo.extent                 = ef;
               imageCreateInfo.mipLevels              = 1;
-              imageCreateInfo.arrayLevels            = 1;
+              imageCreateInfo.arrayLayers            = 1;
               imageCreateInfo.samples                = VK_SAMPLE_COUNT_1_BIT;
               imageCreateInfo.tiling                 = VK_IMAGE_TILING_OPTIMAL;
               imageCreateInfo.usage                  = VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT;
@@ -213,6 +217,7 @@ void SetupRenderPass(VkDevice          device,
         rpci.subpassCount                   = 1;
         rpci.pSubpasses                     = &subpass;
         
+        dlg_warn("before vkCreateRenderPass");
         VkResult result =
           vkCreateRenderPass ( device,
                                // logical device that creates the render pass
@@ -224,6 +229,7 @@ void SetupRenderPass(VkDevice          device,
                                // pointer VkRenderPass handle in which the resulting render pass object is returned
         
         ERR_VULKAN_EXIT( result, "Failed to create renderpass" );
+        dlg_warn("after vkCreateRenderPass");
         
         #ifdef DEPTH_BUFFER
           VkImageView frameBufferAttachments[2] = {0};
@@ -253,6 +259,7 @@ void SetupRenderPass(VkDevice          device,
               frameBufferAttachments[1] = depthImageView;
             #endif
             // Create a new framebuffer object
+            dlg_warn("before vkCreateFramebuffer");
             result =
               vkCreateFramebuffer( device,                     // device
                                    // logical device that creates the framebuffer
@@ -263,7 +270,7 @@ void SetupRenderPass(VkDevice          device,
                                    &(*outFrameBuffers)[index]  // pFramebuffer
                                    // pointer to returned VkFramebuffer handle for the framebuffer object
                                    );
-            
+            dlg_warn("after vkCreateFramebuffer");
             ERR_VULKAN_EXIT( result, "Failed to create framebuffer." );
         }//END FOR LOOP index
 }//END SetupRenderPass(..)

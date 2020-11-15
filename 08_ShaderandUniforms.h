@@ -118,8 +118,8 @@ void SetupShaderandUniforms(VkDevice          device,
         };
         
         //position of the object
-        float xp = 0;
-        float yp = 2;
+        float xp =  0;
+        float yp =  2;
         float zp = 10;
         
         // matrix/transform

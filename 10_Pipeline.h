@@ -171,7 +171,7 @@ void SetupPipeline(VkDevice               device,
     depthStencil.depthCompareOp                                = VK_COMPARE_OP_LESS;
     depthStencil.depthBoundsTestEnable                         = VK_FALSE;
     depthStencil.minDepthBounds                                = 0.0f; // Optional
-    depthStencil.maxDepthBounds                                = 0.0f; // Optional
+    depthStencil.maxDepthBounds                                = 1.0f; // Optional
     depthStencil.stencilTestEnable                             = VK_FALSE;
     
     // add finally, pipeline config and creation:
