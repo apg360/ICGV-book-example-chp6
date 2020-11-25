@@ -17,7 +17,7 @@ export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
 export CFLAGS='-g -O0'
 
 #export GLFW3_DIR='/usr/local/lib/cmake/glfw3'
-#source Vulkan/1.2.154.0/setup-env.sh
+#source Vulkan/1.2.154.0/setup-env.sh  #https://vulkan.lunarg.com/doc/sdk/1.2.154.0/linux/getting_started.html
 #echo "Vulkan SDK path = $VULKAN_SDK"
 
 #Use cmake to perform OS operation
