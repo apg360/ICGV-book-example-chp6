@@ -15,7 +15,7 @@ else()
     add_compile_options(-c -Wall -Wextra -pedantic -Werror)
 endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEBUG -D__DEBUG -O0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fstack-protector-all")# -Werror")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument -g -O0 -fstack-protector-all")
 
 #https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html
 target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.

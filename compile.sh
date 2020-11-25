@@ -14,11 +14,11 @@ export CXX=clang++
 export SDKROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk'
 export CPATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk:/opt/local/include'
 export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib'
-export LDFLAGS="-lpthread -lm"
 #export GLFW3_DIR='/usr/local/lib/cmake/glfw3'
 
 #rather put this in CMake file
-export CFLAGS='-c -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument'
+#export CFLAGS='-c -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument'
+#export LDFLAGS="-lpthread -lm -lglfw3"
 
 #source Vulkan/1.2.154.0/setup-env.sh  #https://vulkan.lunarg.com/doc/sdk/1.2.154.0/linux/getting_started.html
 #echo "Vulkan SDK path = $VULKAN_SDK"
