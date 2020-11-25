@@ -14,9 +14,12 @@ export CXX=clang++
 export SDKROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk'
 export CPATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk:/opt/local/include'
 export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib'
-export CFLAGS='-g -O0'
-
+export LDFLAGS="-lpthread -lm"
 #export GLFW3_DIR='/usr/local/lib/cmake/glfw3'
+
+#rather put this in CMake file
+export CFLAGS='-c -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument'
+
 #source Vulkan/1.2.154.0/setup-env.sh  #https://vulkan.lunarg.com/doc/sdk/1.2.154.0/linux/getting_started.html
 #echo "Vulkan SDK path = $VULKAN_SDK"
 
@@ -38,7 +41,13 @@ cmake -E time cmake --build build/
 #glslangValidator -V simple.vert
 #cp vert.spv frag.spv build/
 
-#Run application
-echo -e "\n********* STARTING ********\n"
-build/./ICGV
+executableFileName=ICGV
+#Run application if it exists (will exist if was compiled successfully)
+if [ -f build/$executableFileName ]; then
+        echo -e "\n********* STARTING ********\n"
+        build/./$executableFileName
+else 
+    echo -e "\nERROR: Compilation failed, $executableFileName does not exist.\n"
+fi
 echo -e "\n\n"
+

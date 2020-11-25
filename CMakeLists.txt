@@ -12,10 +12,10 @@ if (MSVC)
     add_compile_options(/W4 /WX)
 else()
     # lots of warnings and all warnings as errors
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
+    add_compile_options(-c -Wall -Wextra -pedantic -Werror)
 endif()
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEBUG -D__DEBUG -O0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fPIC -fpermissive -fstack-protector-all")# -Werror")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fstack-protector-all")# -Werror")
 
 #https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html
 target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
