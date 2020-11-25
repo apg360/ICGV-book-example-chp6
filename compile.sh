@@ -19,7 +19,9 @@ export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib
 #rather put this in CMake file
 #export CFLAGS='-c -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument'
 #export LDFLAGS="-lpthread -lm -lglfw3"
-
+#export LDFLAGS="-L/usr/local/opt/ncurses/lib"
+#export CFLAGS="-I/usr/local/opt/ncurses/include"
+  
 #source Vulkan/1.2.154.0/setup-env.sh  #https://vulkan.lunarg.com/doc/sdk/1.2.154.0/linux/getting_started.html
 #echo "Vulkan SDK path = $VULKAN_SDK"
 
