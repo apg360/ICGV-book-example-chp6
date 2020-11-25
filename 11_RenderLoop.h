@@ -23,12 +23,12 @@ void RenderLoop(VkDevice          device,
 {
     dlg_warn("Welcome RenderLoop");
     uint32_t nextImageIdx =0;
-    /*vkAcquireNextImageKHR( device,
+    vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
                            VK_NULL_HANDLE,
                            VK_NULL_HANDLE,
-                           &nextImageIdx );*/
+                           &nextImageIdx );
     dlg_error("nextImageIdx = %u", nextImageIdx);
     
     VkCommandBufferBeginInfo beginInfo                         = {};

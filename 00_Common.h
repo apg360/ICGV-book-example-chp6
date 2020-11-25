@@ -103,6 +103,10 @@ void freeArray(myArray *a) {
 }
 
 /*
+// https://stackoverflow.com/questions/3536153/c-dynamically-growing-array/3536261
+// https://stackoverflow.com/questions/26831981/should-i-check-if-malloc-was-successful
+// http://www.cplusplus.com/reference/cstdlib/realloc
+// https://overiq.com/c-programming-101/the-realloc-function-in-c
 Array a;
 int i;
 
