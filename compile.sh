@@ -15,7 +15,10 @@ export SDKROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk'
 export CPATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk:/opt/local/include'
 export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib'
 export CFLAGS='-g -O0'
+
 #export GLFW3_DIR='/usr/local/lib/cmake/glfw3'
+#source Vulkan/1.2.154.0/setup-env.sh
+#echo "Vulkan SDK path = $VULKAN_SDK"
 
 #Use cmake to perform OS operation
 cmake -E rm -rf build           #delete directory build
