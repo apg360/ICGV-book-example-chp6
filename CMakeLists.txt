@@ -25,7 +25,7 @@ target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
 # (*) LunarG SDK Vulkan
 
 #Finding and linking GLFW3 (windowing, context & input)
-find_package(GLFW3 3.3 REQUIRED)
+find_package(glfw3 3.3 REQUIRED)
 if (GLFW3_FOUND)
     message(STATUS "GLFW3 FOUND")
     #message(STATUS "GLFW3_INCLUDE_DIRS in ${GLFW3_INCLUDE_DIR}")
