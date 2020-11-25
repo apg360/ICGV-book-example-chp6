@@ -14,8 +14,8 @@ else()
     # lots of warnings and all warnings as errors
     add_compile_options(-c -Wall -Wextra -pedantic -Werror)
 endif()
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEBUG -D__DEBUG -O0")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument -g -O0 -fstack-protector-all")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEBUG -D__DEBUG -O0")
+#set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument -g -O0 -fstack-protector-all")
 
 #https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html
 target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
@@ -25,7 +25,7 @@ target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
 # (*) LunarG SDK Vulkan
 
 #Finding and linking GLFW3 (windowing, context & input)
-find_package(glfw3 3.3 REQUIRED)
+find_package(GLFW3 3.3 REQUIRED)
 if (GLFW3_FOUND)
     message(STATUS "GLFW3 FOUND")
     #message(STATUS "GLFW3_INCLUDE_DIRS in ${GLFW3_INCLUDE_DIR}")
