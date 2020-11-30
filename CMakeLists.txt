@@ -24,6 +24,23 @@ target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
 # (*) brew install glfw3 --HEAD
 # (*) LunarG SDK Vulkan
 
+#Finding and linking libm
+find_library(MATH_LIBRARY NAMES libm.a)
+if(MATH_LIBRARY)
+  get_filename_component(MATH_LIB_DIR ${MATH_LIBRARY} PATH)
+  link_directories(${MATH_LIB_DIR})
+   message(STATUS "libm FOUND ${MATH_LIBRARY}")
+  # Name the library both with a full path and as "-lm" to
+  # activate the link type switching code for both cases.
+  # If the second one links shared then the link will fail.
+  set(MATH_LIBRARIES ${MATH_LIBRARY} -lm)
+  
+  target_link_libraries(ICGV PUBLIC ${MATH_LIBRARIES})
+else()
+  message(FATAL_ERROR "Cannot find libm.a needed for this test")
+endif()
+
+
 #Finding and linking GLFW3 (windowing, context & input)
 find_package(GLFW3 REQUIRED)
 if (GLFW3_FOUND)
