@@ -18,7 +18,7 @@ export LIBRARY_PATH='$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacO
 
 #rather put this in CMake file
 #export CFLAGS='-c -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument'
-export LDFLAGS="-lpthread" # -lglfw3
+export LDFLAGS="-lpthread"
 #export LDFLAGS="-L/usr/local/opt/ncurses/lib"
 #export CFLAGS="-I/usr/local/opt/ncurses/include"
   
