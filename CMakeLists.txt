@@ -28,6 +28,16 @@ target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
 # (*) brew install glfw3 --HEAD
 # (*) LunarG SDK Vulkan
 
+#Finding and linking libpthread
+set(PTHREAD_LIBS "")
+include(CheckLibraryExists)
+#-- Looking for pthread_once in pthread
+check_library_exists(pthread pthread_once "" LIBPTHREAD)
+if(LIBPTHREAD)
+    list(APPEND PTHREAD_LIBS "pthread")
+endif()
+target_link_libraries(ICGV PUBLIC ${PTHREAD_LIBS})
+
 #Finding and linking libm
 find_library(MATH_LIBRARY NAMES libm.a)
 if(MATH_LIBRARY)
