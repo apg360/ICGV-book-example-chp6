@@ -39,7 +39,11 @@ endif()
 target_link_libraries(ICGV PUBLIC ${PTHREAD_LIBS})
 
 #Finding and linking libm
-find_library(MATH_LIBRARY NAMES libm.a)
+if(APPLE)
+  find_library(MATH_LIBRARY NAMES libm.dylib)
+elseif(UNIX)
+  find_library(MATH_LIBRARY NAMES libm.a)
+endif()
 if(MATH_LIBRARY)
   get_filename_component(MATH_LIB_DIR ${MATH_LIBRARY} PATH)
   link_directories(${MATH_LIB_DIR})
