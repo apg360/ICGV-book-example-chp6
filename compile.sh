@@ -13,12 +13,12 @@ export CC=clang
 export CXX=clang++
 export SDKROOT='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk'
 export CPATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk:/opt/local/include'
-export LIBRARY_PATH='/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib'
-#export GLFW3_DIR='/usr/local/lib/cmake/glfw3'
+export LIBRARY_PATH='$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib'
+#export GLFW3_DIR='/usr/lib/cmake/glfw3'
 
 #rather put this in CMake file
 #export CFLAGS='-c -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument'
-#export LDFLAGS="-lpthread -lm -lglfw3"
+export LDFLAGS="-lpthread -lm" # -lglfw3
 #export LDFLAGS="-L/usr/local/opt/ncurses/lib"
 #export CFLAGS="-I/usr/local/opt/ncurses/include"
   
