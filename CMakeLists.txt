@@ -16,6 +16,10 @@ else()
 endif()
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_DEBUG -D__DEBUG -O0")
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wunused-variable -Wunused-function -Wmissing-braces -Wunused-command-line-argument -g -O0 -fstack-protector-all")
+#set(LINKER_FLAGS "-lpthread")
+#target_link_libraries(ICGV microkernel ${LINKER_FLAGS})
+#set(LD_FLAGS ${LINKER_FLAGS})
+#set(LDFLAGS ${LINKER_FLAGS})
 
 #https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html
 target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
