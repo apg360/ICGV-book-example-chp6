@@ -189,6 +189,7 @@ void SetupSwapChain(VkDevice          device,
             *outPresentImageViews = malloc( 2 * sizeof(VkImageView) );
             for(uint32_t index = 0; index < 2; ++index )
             {
+				
                 // Create VkImageViews for your swap-chain
                 // VkImages buffers
                 VkImageViewCreateInfo ivci                = {};
@@ -216,6 +217,7 @@ void SetupSwapChain(VkDevice          device,
                                      // optional controls host memory allocation
                                      &(*outPresentImageViews[index])  );
                                      // pointer to VkImageView handle for returned image view object
+                dlg_error("swapchain vkCreateImageView INDEX = %u", index);
                 dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
