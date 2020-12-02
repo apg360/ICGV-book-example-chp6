@@ -23,13 +23,14 @@ void RenderLoop(VkDevice          device,
 {
     dlg_warn("Welcome RenderLoop");
     uint32_t nextImageIdx =0;
-    vkAcquireNextImageKHR( device,
+    VkResult result = vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
                            VK_NULL_HANDLE,
                            VK_NULL_HANDLE,
                            &nextImageIdx );
-    dlg_error("nextImageIdx = %u", nextImageIdx);
+    dlg_error("nextImageIdx = %u  vkresult = %u" , nextImageIdx,result);
+    ERR_VULKAN_EXIT( result, "Failed vkAcquireNextImageKHR" );
     
     VkCommandBufferBeginInfo beginInfo                         = {};
     beginInfo.sType                                            = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
