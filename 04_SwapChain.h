@@ -187,6 +187,10 @@ void SetupSwapChain(VkDevice          device,
         {
             // You have 2 for double buffering
             *outPresentImageViews = malloc( 2 * sizeof(VkImageView) );
+            
+            /*VkImage *swapchainImages =
+            (VkImage *)malloc(demo->swapchainImageCount * sizeof(VkImage));*/
+            
             for(uint32_t index = 0; index < 2; ++index )
             {
 				
@@ -205,7 +209,7 @@ void SetupSwapChain(VkDevice          device,
                 ivci.subresourceRange.levelCount          = 1;
                 ivci.subresourceRange.baseArrayLayer      = 0;
                 ivci.subresourceRange.layerCount          = 1;
-                ivci.image                                = (*outPresentImages)[index];
+                ivci.image                                = (VkImage *)(*outPresentImages)[index];
                 
                 // Create an image view from an existing image
                 VkResult result =
@@ -217,7 +221,7 @@ void SetupSwapChain(VkDevice          device,
                                      // optional controls host memory allocation
                                      &(*outPresentImageViews[index])  );
                                      // pointer to VkImageView handle for returned image view object
-                dlg_error("swapchain vkCreateImageView INDEX = %u", index);
+                dlg_error("swapchain vkCreateImageView INDEX = %u>", index);
                 dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
