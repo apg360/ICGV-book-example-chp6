@@ -232,9 +232,9 @@ void SetupRenderPass(VkDevice          device,
         dlg_warn("after vkCreateRenderPass");
         
         #ifdef DEPTH_BUFFER
-          VkImageView frameBufferAttachments[2] = {0};
+          VkImageView frameBufferAttachments[2] = {};
         #else
-          VkImageView frameBufferAttachments[1] = {0};
+          VkImageView frameBufferAttachments[1] = {};
         #endif
         // create your frame buffers:
         VkFramebufferCreateInfo fbci  = {};
@@ -247,8 +247,9 @@ void SetupRenderPass(VkDevice          device,
         fbci.height                   = height;
         fbci.layers                   = 1;
         
+        dlg_error("fbci.attachmentCount = %u", rpci.attachmentCount);
         // Create a framebuffer per swap-chain imageView:
-        *outFrameBuffers = (VkFramebuffer *)malloc( 2 * sizeof(VkFramebuffer) );
+        *outFrameBuffers = (VkFramebuffer)malloc( 2 * sizeof(VkFramebuffer) );
         for( uint32_t index = 0; index < 2; ++index )
         {
             frameBufferAttachments[0] = presentImageViews[index];

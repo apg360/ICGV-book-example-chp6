@@ -221,8 +221,9 @@ void SetupSwapChain(VkDevice          device,
                                      // optional controls host memory allocation
                                      &(*outPresentImageViews[index])  );
                                      // pointer to VkImageView handle for returned image view object
-                dlg_error("swapchain vkCreateImageView INDEX = %u>", index);
+                dlg_error("swapchain vkCreateImageView INDEX = %u", index);
                 dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
+                dlg_error("*outPresentImageViews[index] = %u", &(*outPresentImageViews[index]));
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
         }
