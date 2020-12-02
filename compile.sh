@@ -11,9 +11,9 @@
 export CC=clang
 export CXX=clang++
 export PATH=~/MyProjects/clang+llvm-10.0.0-x86_64-apple-darwin/bin:~/MyProjects/Ninja1.10.1/ninja:$PATH
-export SDKROOT='$SDKROOT:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk'
-export CPATH='$CPATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk:/opt/local/include'
-export LIBRARY_PATH='$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib'
+export SDKROOT="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+export CPATH="/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk:/opt/local/include"
+export LIBRARY_PATH="$LIBRARY_PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/lib:/opt/local/lib"
 #export GLFW3_DIR='/usr/lib/cmake/glfw3'
 
 #rather put this in CMake file

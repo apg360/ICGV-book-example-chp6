@@ -168,7 +168,7 @@ void SetupSwapChain(VkDevice          device,
             assert(imageCount == 2); // If image count not equal 2, abort the software
             
             // this should be 2 for double-buffering
-            *outPresentImages = malloc( imageCount * sizeof(VkImage) );
+            *outPresentImages = (VkImage *)malloc( imageCount * sizeof(VkImage) );
             
             // Obtain the presentable images and link them to
             // the images in the swapchain
@@ -209,7 +209,7 @@ void SetupSwapChain(VkDevice          device,
                 ivci.subresourceRange.levelCount          = 1;
                 ivci.subresourceRange.baseArrayLayer      = 0;
                 ivci.subresourceRange.layerCount          = 1;
-                ivci.image                                = (VkImage *)(*outPresentImages)[index];
+                ivci.image                                = (*outPresentImages)[index];
                 
                 // Create an image view from an existing image
                 VkResult result =
