@@ -120,7 +120,6 @@ freeArray(&a);
 
 //https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkResult.html
 char* translateVkResult(int result) {
- char str[255];
     switch (result) {
     // Success
     case VK_SUCCESS:
@@ -171,7 +170,6 @@ char* translateVkResult(int result) {
     case VK_ERROR_VALIDATION_FAILED_EXT:
         return "VK_ERROR_VALIDATION_FAILED_EXT";
     default:
-        sprintf(str, "Unknown [%d]", result);
-        return str;
+        return printf("Unknown [%d]", result);
     }
 }
