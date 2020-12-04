@@ -21,6 +21,12 @@ endif()
 #set(LD_FLAGS ${LINKER_FLAGS})
 #set(LDFLAGS ${LINKER_FLAGS})
 
+# Compiler Condition (clang ; clang++) LLVM Clang (clang.llvm.org)
+#if ( "${CMAKE_C_COMPILER_ID}" STREQUAL "Clang" )
+  #message( STATUS "Setting the flags for ${CMAKE_C_COMPILER_ID} compiler" )
+  #add_definitions( --std=c99 )
+#endif()
+
 #https://cmake.org/cmake/help/latest/prop_gbl/CMAKE_C_KNOWN_FEATURES.html
 target_compile_features(ICGV PRIVATE c_std_11) #Compiler mode is at least C 11.
 
