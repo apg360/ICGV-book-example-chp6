@@ -1,13 +1,13 @@
 
 #pragma once // include guard
 
-#include <stdio.h>
-#include <stdlib.h>     // EXIT_FAILURE, EXIT_SUCCESS
+#include <stdio.h>      // printf
+#include <stdlib.h>     // calloc, EXIT_FAILURE, EXIT_SUCCESS
 #include <assert.h>     // C++ DBG_ASSERT become assert
-#include <string.h>     // strcpy, strcmp, strcat(concatenates), etc...
+#include <string.h>     // strlen, strcpy, strcmp, strcat(concatenates), etc...
+#include <stdarg.h>       // va_*
 #include <dlg/dlg.h>    // logging
 #include <math.h>       // tanf
-
 
 /*
 #include <volk.h>
@@ -118,9 +118,49 @@ printf("%d\n", a.used);  // print number of elements
 freeArray(&a);
 */
 
+
+void println(char *line)
+{
+    printf("%s\n", line);
+}
+
+/*
+    str = concat(0);             println(str); free(str);
+    str = concat(1,"a");         println(str); free(str);
+    str = concat(2,"a","b");     println(str); free(str);
+    str = concat(3,"a","b","c"); println(str); free(str);
+*/
+char* concat(int count, ...)
+{
+    va_list ap;
+    int i;
+
+    // Find required length to store merged string
+    int len = 1; // room for NULL
+    va_start(ap, count);
+    for(i=0 ; i<count ; i++)
+        len += strlen(va_arg(ap, char*));
+    va_end(ap);
+
+    // Allocate memory to concat strings
+    char *merged = calloc(sizeof(char),len);
+    int null_pos = 0;
+
+    // Actually concatenate strings
+    va_start(ap, count);
+    for(i=0 ; i<count ; i++)
+    {
+        char *s = va_arg(ap, char*);
+        strcpy(merged+null_pos, s);
+        null_pos += strlen(s);
+    }
+    va_end(ap);
+
+    return merged;
+}
+
 //https://www.khronos.org/registry/vulkan/specs/1.2-extensions/man/html/VkResult.html
 char* translateVkResult(int result) {
- char * str[255];
     switch (result) {
     // Success
     case VK_SUCCESS:
@@ -171,7 +211,6 @@ char* translateVkResult(int result) {
     case VK_ERROR_VALIDATION_FAILED_EXT:
         return "VK_ERROR_VALIDATION_FAILED_EXT";
     default:
-        sprintf(*str, "Unknown [%d]", result);
-        return *str;
+        return concat(3,"Unknown [",result,"]");
     }
 }
