@@ -166,7 +166,8 @@ void SetupSwapChain(VkDevice          device,
                                      NULL );         //pSwapchainImages
                                      // either NULL or a pointer to an array of VkSwapchainImageKHR structures
             assert(imageCount == 2); // If image count not equal 2, abort the software
-            
+            dlg_error("the story happens here");
+            dlg_error("image count  =%u",imageCount);
             // this should be 2 for double-buffering
             *outPresentImages = (VkImage *)malloc( imageCount * sizeof(VkImage) );
             
@@ -182,11 +183,13 @@ void SetupSwapChain(VkDevice          device,
                                        *outPresentImages);  // pSwapchain
                                        // either NULL or a pointer to an array of VkSwapchainImageKHR structures
             ERR_VULKAN_EXIT( result, "Failed to create swap-chain images");
+            dlg_error("vkGetSwapchainImagesKHR result  =%u",result);
+            dlg_error("*outPresentImages  =%u",*outPresentImages);
         }
         //--//--//--//
         {
             // You have 2 for double buffering
-            *outPresentImageViews = malloc( 2 * sizeof(VkImageView) );
+            *outPresentImageViews = (VkImageView*)malloc( 2 * sizeof(VkImageView) );
             
             /*VkImage *swapchainImages =
             (VkImage *)malloc(demo->swapchainImageCount * sizeof(VkImage));*/
