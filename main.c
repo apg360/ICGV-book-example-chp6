@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
      VkSwapchainKHR swapChain               = NULL;
      VkImage*       presentImages           = NULL;
      VkImageView*   presentImageViews       = NULL;
-     SetupSwapChain(device,
+     VkImageView myTest = SetupSwapChain(device,
                     physicalDevice,
                     surface,
                     &width,
@@ -57,8 +57,9 @@ int main(int argc, char *argv[]) {
                     &presentImageViews);
     
     dlg_error("IN MAIN");
-    dlg_error("presentImageViews[0] = %u", &presentImageViews[0]); 
-    dlg_error("presentImageViews[1] = %u", &presentImageViews[1]); 
+    dlg_error("presentImageViews[0] = %u", &presentImageViews[0]);
+    dlg_error("presentImageViews[1] = %u", &presentImageViews[1]);
+    dlg_error("myTest = %u", &myTest);
     
      // Step 5 - Create Render Pass          (Section 6.6)
      VkRenderPass    renderPass             = NULL;
