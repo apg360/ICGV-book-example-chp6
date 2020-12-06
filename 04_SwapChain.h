@@ -7,7 +7,7 @@
 //________//________// START Variables and Functions before main function of this step
 //________//________// END Variables and Functions before main function of this step
 
-VkImageView SetupSwapChain(VkDevice          device,
+void SetupSwapChain(VkDevice          device,
                     VkPhysicalDevice  physicalDevice,
                     VkSurfaceKHR      surface,
                     int*              outWidth,
@@ -233,5 +233,4 @@ VkImageView SetupSwapChain(VkDevice          device,
         dlg_error("just before END SetupSwapChain");
         dlg_error("renderpass presentImageViews[0] = %u", &(*outPresentImageViews[0])); 
         dlg_error("renderpass presentImageViews[1] = %u", &(*outPresentImageViews[1])); 
-        return &(*outPresentImageViews[1]);
 }//END SetupSwapChain(..)
