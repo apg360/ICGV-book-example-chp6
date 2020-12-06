@@ -256,7 +256,7 @@ void SetupRenderPass(VkDevice          device,
         fbci.height                   = height;
         fbci.layers                   = 1;
         
-        dlg_error("fbci.attachmentCount = %u", rpci.attachmentCount);
+        dlg_warn("fbci.attachmentCount = %u", rpci.attachmentCount);
         // Create a framebuffer per swap-chain imageView:
         *outFrameBuffers = (VkFramebuffer*)malloc( 2 * sizeof(VkFramebuffer) );
         for( uint32_t index = 0; index < 2; ++index )
@@ -266,8 +266,7 @@ void SetupRenderPass(VkDevice          device,
               frameBufferAttachments[1] = depthImageView;
             #endif
             
-            dlg_error("frameBufferAttachments presentImageViews INDEX = %u", index);
-            dlg_error(" frameBufferAttachments[0] = %u", presentImageViews[index]);
+            dlg_error("renderpass presentImageViews[%u] = %u", index,&presentImageViews[index]);
             
             // Create a new framebuffer object
             dlg_warn("before vkCreateFramebuffer");
@@ -282,6 +281,7 @@ void SetupRenderPass(VkDevice          device,
                                    // pointer to returned VkFramebuffer handle for the framebuffer object
                                    );
             dlg_warn("after vkCreateFramebuffer");
+            dlg_warn("renderpass vkCreateFramebuffer = %s", translateVkResult(result));
             ERR_VULKAN_EXIT( result, "Failed to create framebuffer." );
         }//END FOR LOOP index
     

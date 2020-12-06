@@ -55,7 +55,11 @@ int main(int argc, char *argv[]) {
                     &swapChain,
                     &presentImages,
                     &presentImageViews);
-
+    
+    dlg_error("IN MAIN");
+    dlg_error("presentImageViews[0] = %u", &presentImageViews[0]); 
+    dlg_error("presentImageViews[1] = %u", &presentImageViews[1]); 
+    
      // Step 5 - Create Render Pass          (Section 6.6)
      VkRenderPass    renderPass             = NULL;
      VkFramebuffer*  frameBuffers           = NULL;
