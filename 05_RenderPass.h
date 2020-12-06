@@ -252,11 +252,11 @@ void SetupRenderPass(VkDevice          device,
         *outFrameBuffers = (VkFramebuffer*)malloc( 2 * sizeof(VkFramebuffer) );
         for( uint32_t index = 0; index < 2; ++index )
         {
-            frameBufferAttachments[0] = presentImageViews[index];
+            frameBufferAttachments[index] = presentImageViews[index];
             dlg_error("frameBufferAttachments presentImageViews INDEX = %u", index);
             dlg_error(" frameBufferAttachments[0] = %u", presentImageViews[index]);
             #ifdef DEPTH_BUFFER
-              frameBufferAttachments[1] = depthImageView;
+              frameBufferAttachments[index] = depthImageView;
             #endif
             // Create a new framebuffer object
             dlg_warn("before vkCreateFramebuffer");
