@@ -191,9 +191,6 @@ void SetupSwapChain(VkDevice          device,
             // You have 2 for double buffering
             *outPresentImageViews = (VkImageView*)malloc( 2 * sizeof(VkImageView) );
             
-            /*VkImage *swapchainImages =
-            (VkImage *)malloc(demo->swapchainImageCount * sizeof(VkImage));*/
-            
             for(uint32_t index = 0; index < 2; ++index )
             {
 				

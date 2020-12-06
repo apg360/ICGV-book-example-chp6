@@ -241,9 +241,9 @@ void SetupRenderPass(VkDevice          device,
         dlg_warn("after vkCreateRenderPass");
         
         #ifdef DEPTH_BUFFER
-          VkImageView frameBufferAttachments[2] = {};
+          VkImageView frameBufferAttachments[2] = {}; //presentImageViews[0],depthImageView
         #else
-          VkImageView frameBufferAttachments[1] = {};
+          VkImageView frameBufferAttachments[1] = {}; //presentImageViews[0]
         #endif
         // create your frame buffers:
         VkFramebufferCreateInfo fbci  = {};
@@ -262,11 +262,13 @@ void SetupRenderPass(VkDevice          device,
         for( uint32_t index = 0; index < 2; ++index )
         {
             frameBufferAttachments[0] = presentImageViews[index];
-            dlg_error("frameBufferAttachments presentImageViews INDEX = %u", index);
-            dlg_error(" frameBufferAttachments[0] = %u", presentImageViews[index]);
             #ifdef DEPTH_BUFFER
               frameBufferAttachments[1] = depthImageView;
             #endif
+            
+            dlg_error("frameBufferAttachments presentImageViews INDEX = %u", index);
+            dlg_error(" frameBufferAttachments[0] = %u", presentImageViews[index]);
+            
             // Create a new framebuffer object
             dlg_warn("before vkCreateFramebuffer");
             result =
