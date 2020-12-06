@@ -208,19 +208,19 @@ void SetupRenderPass(VkDevice          device,
         subpass.pColorAttachments           = &car;
         subpass.pDepthStencilAttachment     = NULL;
         
-        #ifdef DEPTH_BUFFER
-          VkAttachmentReference dar         = {};
-          dar.attachment                    = 1;//COUNT_ARRAY_ELEMS(pass); // color (+depth if def DEPTH_BUFFER)
-          dar.layout                        = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
-          subpass.pDepthStencilAttachment   = &dar;
-        #endif
+       #ifdef DEPTH_BUFFER
+        VkAttachmentReference dar         = {};
+        dar.attachment                    = 1;//COUNT_ARRAY_ELEMS(pass); // color (+depth if def DEPTH_BUFFER)
+        dar.layout                        = VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL;
+        subpass.pDepthStencilAttachment   = &dar;
+       #endif
         
         // create your main renderpass
         VkRenderPassCreateInfo rpci         = {};
         rpci.sType                          = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
-        rpci.attachmentCount                = 1;//COUNT_ARRAY_ELEMS(pass); // color (+depth if def DEPTH_BUFFER)
+        rpci.attachmentCount                = 1; // color //COUNT_ARRAY_ELEMS(pass); // color (+depth if def DEPTH_BUFFER)
        #ifdef DEPTH_BUFFER
-        rpci.subpassCount                   = 2;
+        rpci.subpassCount                   = 2; // color and depth
        #endif
         rpci.pAttachments                   = pass;
         rpci.subpassCount                   = 1;
