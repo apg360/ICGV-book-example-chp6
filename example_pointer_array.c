@@ -10,8 +10,8 @@ void functionxyz_char(char**     outVariable)
     printf("Inside functionxyz_char \n");
     printf("theVariablechar[0] = %c \n",(*outVariable)[0]);
     printf("theVariablechar[1] = %c \n",(*outVariable)[1]);
-    printf("Address[0] = %p \n", &((*outVariable)[0]));
-    printf("Address[1] = %p \n", &((*outVariable)[1]));
+    printf("Address[0] = %p \n", &( (*outVariable)[0] )   );
+    printf("Address[1] = %p \n", &( (*outVariable)[1] )   );
 }
 
 //strings

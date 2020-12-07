@@ -67,56 +67,56 @@ void SetupSwapChain(VkDevice          device,
             *outHeight                     = surfaceResolution.height;
             dlg_info("surface resolution width : %u", *outWidth);
             dlg_info("surface resolution height : %u", *outHeight );
-    /*
-    VkExtent2D swapchainExtent;
-    // width and height are either both 0xFFFFFFFF, or both not 0xFFFFFFFF.
-    if (surfaceCapabilities.currentExtent.width == 0xFFFFFFFF) {
-        // If the surface size is undefined, the size is set to the size
-        // of the images requested, which must fit within the minimum and
-        // maximum values.
-        swapchainExtent.width = 800;
-        swapchainExtent.height = 600;
+			/*
+			VkExtent2D swapchainExtent;
+			// width and height are either both 0xFFFFFFFF, or both not 0xFFFFFFFF.
+			if (surfaceCapabilities.currentExtent.width == 0xFFFFFFFF) {
+				// If the surface size is undefined, the size is set to the size
+				// of the images requested, which must fit within the minimum and
+				// maximum values.
+				swapchainExtent.width = 800;
+				swapchainExtent.height = 600;
 
-        if (swapchainExtent.width < surfaceCapabilities.minImageExtent.width) {
-            swapchainExtent.width = surfaceCapabilities.minImageExtent.width;
-        } else if (swapchainExtent.width > surfaceCapabilities.maxImageExtent.width) {
-            swapchainExtent.width = surfaceCapabilities.maxImageExtent.width;
-        }
+				if (swapchainExtent.width < surfaceCapabilities.minImageExtent.width) {
+					swapchainExtent.width = surfaceCapabilities.minImageExtent.width;
+				} else if (swapchainExtent.width > surfaceCapabilities.maxImageExtent.width) {
+					swapchainExtent.width = surfaceCapabilities.maxImageExtent.width;
+				}
 
-        if (swapchainExtent.height < surfaceCapabilities.minImageExtent.height) {
-            swapchainExtent.height = surfaceCapabilities.minImageExtent.height;
-        } else if (swapchainExtent.height > surfaceCapabilities.maxImageExtent.height) {
-            swapchainExtent.height = surfaceCapabilities.maxImageExtent.height;
-        }
-    } else {
-        // If the surface size is defined, the swap chain size must match
-        swapchainExtent = surfaceCapabilities.currentExtent;
-        *outWidth = surfaceCapabilities.currentExtent.width;
-        *outHeight = surfaceCapabilities.currentExtent.height;
-    }
-    */
-    VkPresentModeKHR swapchainPresentMode = VK_PRESENT_MODE_FIFO_KHR;
+				if (swapchainExtent.height < surfaceCapabilities.minImageExtent.height) {
+					swapchainExtent.height = surfaceCapabilities.minImageExtent.height;
+				} else if (swapchainExtent.height > surfaceCapabilities.maxImageExtent.height) {
+					swapchainExtent.height = surfaceCapabilities.maxImageExtent.height;
+				}
+			} else {
+				// If the surface size is defined, the swap chain size must match
+				swapchainExtent = surfaceCapabilities.currentExtent;
+				*outWidth = surfaceCapabilities.currentExtent.width;
+				*outHeight = surfaceCapabilities.currentExtent.height;
+			}
+			*/
+			VkPresentModeKHR swapchainPresentMode = VK_PRESENT_MODE_FIFO_KHR;
 
-    // Determine the number of VkImage's to use in the swap chain.
-    // Application desires to only acquire 1 image at a time (which is
-    // "surfCapabilities.minImageCount").
-    uint32_t desiredNumOfSwapchainImages = surfaceCapabilities.minImageCount;
-    // If maxImageCount is 0, we can ask for as many images as we want;
-    // otherwise we're limited to maxImageCount
-    if ((surfaceCapabilities.maxImageCount > 0) &&
-        (desiredNumOfSwapchainImages > surfaceCapabilities.maxImageCount)) {
-        // Application must settle for fewer images than desired:
-        desiredNumOfSwapchainImages = surfaceCapabilities.maxImageCount;
-    }
+			// Determine the number of VkImage's to use in the swap chain.
+			// Application desires to only acquire 1 image at a time (which is
+			// "surfCapabilities.minImageCount").
+			uint32_t desiredNumOfSwapchainImages = surfaceCapabilities.minImageCount;
+			// If maxImageCount is 0, we can ask for as many images as we want;
+			// otherwise we're limited to maxImageCount
+			if ((surfaceCapabilities.maxImageCount > 0) &&
+				(desiredNumOfSwapchainImages > surfaceCapabilities.maxImageCount)) {
+				// Application must settle for fewer images than desired:
+				desiredNumOfSwapchainImages = surfaceCapabilities.maxImageCount;
+			}
 
-    VkSurfaceTransformFlagsKHR preTransform;
-    if (surfaceCapabilities.supportedTransforms &
-        VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
-        preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
-    } else {
-        preTransform = surfaceCapabilities.currentTransform;
-    }
-            
+			VkSurfaceTransformFlagsKHR preTransform;
+			if (surfaceCapabilities.supportedTransforms &
+				VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR) {
+				preTransform = VK_SURFACE_TRANSFORM_IDENTITY_BIT_KHR;
+			} else {
+				preTransform = surfaceCapabilities.currentTransform;
+			}
+					
             
             VkSwapchainCreateInfoKHR ssci  = {};
             ssci.sType                     = VK_STRUCTURE_TYPE_SWAPCHAIN_CREATE_INFO_KHR;
@@ -152,9 +152,11 @@ void SetupSwapChain(VkDevice          device,
             free(present_modes);
         }//END Create Swap-Chain
         //--//--//--//
+        dlg_error("before outPresentImages [0] = %p",(outPresentImages[0]) );
+        dlg_error("before outPresentImages [1] = %p",(outPresentImages[1]) );
         {
             // Create your images 'double' buffering
-            uint32_t imageCount    = 0;
+            uint32_t imageCount    = NULL;
             // You'll need to obtain the array of presentable images associated
             // with the swapchain you created. First, you pass in 'NULL' to 
             // obtain the number of images (i.e., should be 2)
@@ -168,10 +170,12 @@ void SetupSwapChain(VkDevice          device,
                                      // either NULL or a pointer to an array of VkSwapchainImageKHR structures
             assert(imageCount == 2); // If image count not equal 2, abort the software
             dlg_error("the story happens here");
-            dlg_error("image count  =%u",imageCount);
+            dlg_warn("image count  =%u",imageCount);
             // this should be 2 for double-buffering
             *outPresentImages = malloc( imageCount * sizeof(VkImage) );
             
+            for(uint32_t index = 0; index < 2; ++index )
+            {
             // Obtain the presentable images and link them to
             // the images in the swapchain
             VkResult result =
@@ -181,12 +185,16 @@ void SetupSwapChain(VkDevice          device,
                                        // swapchain to query
                                        &imageCount,          // pSwapchainImageCount
                                        // pointer to an integer related to the number of format pairs available
-                                       *outPresentImages);  // pSwapchain
+                                       *outPresentImages+index  );  // pSwapchain
                                        // either NULL or a pointer to an array of VkSwapchainImageKHR structures
             ERR_VULKAN_EXIT( result, "Failed to create swap-chain images");
-            //dlg_error("vkGetSwapchainImagesKHR result  =%u", translateVkResult(result));
-            //dlg_error("*outPresentImages  =%u",*outPresentImages);
+            //dlg_error("vkGetSwapchainImagesKHR result  = %u %u", result, translateVkResult(result));
+            dlg_error("during creation *outPresentImages [%u] = %p",index, & (  (*outPresentImages)[index] )   );
+		    }
         }
+        dlg_error("after outPresentImages [0] = %p", &( (*outPresentImages)[0] )   );
+        dlg_error("after outPresentImages [1] = %p", &( (*outPresentImages)[1] )   );
+        dlg_error("\n \n \n");
         //--//--//--//
         {
             // You have 2 for double buffering
@@ -194,7 +202,7 @@ void SetupSwapChain(VkDevice          device,
             
             for(uint32_t index = 0; index < 2; ++index )
             {
-				
+				dlg_error("VkImageViewCreateInfo ivci  INDEX = %u", index);
                 // Create VkImageViews for your swap-chain
                 // VkImages buffers
                 VkImageViewCreateInfo ivci                = {};
@@ -211,7 +219,8 @@ void SetupSwapChain(VkDevice          device,
                 ivci.subresourceRange.baseArrayLayer      = 0;
                 ivci.subresourceRange.layerCount          = 1;
                 ivci.image                                = *outPresentImages[index];
-
+                
+                dlg_error("just before vkCreateImageView");
                 // Create an image view from an existing image
                 VkResult result =
                   vkCreateImageView( device,               // device
@@ -220,18 +229,18 @@ void SetupSwapChain(VkDevice          device,
                                      // pointer to instance of the VkImageViewCreateInfo structure containing parameters for the image view
                                      NULL,                 // pAllocator
                                      // optional controls host memory allocation
-                                     &(*outPresentImageViews[index])  );
+                                     *outPresentImageViews+index  );
                                      // pointer to VkImageView handle for returned image view object
                 
-                dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
-                dlg_error("*outPresentImageViews[%u] = %p", index,&(outPresentImageViews[index]) );
+                //dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
+                dlg_error("during creation *outPresentImageViews[%u] = %p", index, &(*outPresentImageViews)[index] );
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
         }
         
         dlg_error("just before SetupSwapChain return ");
-        dlg_error("renderpass presentImageViews[0] = %p", &outPresentImageViews[0] ); 
-        dlg_error("renderpass presentImageViews[1] = %p", &outPresentImageViews[1] ); 
+        dlg_error("renderpass presentImageViews[0] = %p", &( (*outPresentImageViews)[0] )  ); 
+        dlg_error("renderpass presentImageViews[1] = %p", &( (*outPresentImageViews)[1] )  ); 
         
         //--//--//--//
         //Cleanup (for every "malloc" there must be a "free"
