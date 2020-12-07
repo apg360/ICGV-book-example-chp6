@@ -185,6 +185,7 @@ void SetupSwapChain(VkDevice          device,
                                        // swapchain to query
                                        &imageCount,          // pSwapchainImageCount
                                        // pointer to an integer related to the number of format pairs available
+                                       // VkImage*  pSwapchainImages
                                        *outPresentImages+index  );  // pSwapchain
                                        // either NULL or a pointer to an array of VkSwapchainImageKHR structures
             ERR_VULKAN_EXIT( result, "Failed to create swap-chain images");
@@ -218,7 +219,8 @@ void SetupSwapChain(VkDevice          device,
                 ivci.subresourceRange.levelCount          = 1;
                 ivci.subresourceRange.baseArrayLayer      = 0;
                 ivci.subresourceRange.layerCount          = 1;
-                ivci.image                                = *outPresentImages[index];
+                //VkImage image;   <=> (*foo)[x]  = *(  *foo + x  )
+                ivci.image                                = (*outPresentImages)[index];
                 
                 dlg_error("just before vkCreateImageView");
                 // Create an image view from an existing image
