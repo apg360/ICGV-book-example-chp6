@@ -57,8 +57,9 @@ int main(int argc, char *argv[]) {
                     &presentImageViews);
     
     dlg_error("IN MAIN");
-    dlg_error("presentImageViews[0] = %u", &presentImageViews[0]);
-    dlg_error("presentImageViews[1] = %u", &presentImageViews[1]);
+    dlg_error("presentImageViews[0] = %p", &presentImageViews[0]);
+    dlg_error("presentImageViews[1] = %p", &presentImageViews[1]);
+    exit(1);
     
      // Step 5 - Create Render Pass          (Section 6.6)
      VkRenderPass    renderPass             = NULL;

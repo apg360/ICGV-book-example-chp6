@@ -169,7 +169,7 @@ void SetupSwapChain(VkDevice          device,
             dlg_error("the story happens here");
             dlg_error("image count  =%u",imageCount);
             // this should be 2 for double-buffering
-            *outPresentImages = (VkImage *)malloc( imageCount * sizeof(VkImage) );
+            *outPresentImages = malloc( imageCount * sizeof(VkImage) );
             
             // Obtain the presentable images and link them to
             // the images in the swapchain
@@ -189,7 +189,7 @@ void SetupSwapChain(VkDevice          device,
         //--//--//--//
         {
             // You have 2 for double buffering
-            *outPresentImageViews = (VkImageView*)malloc( 2 * sizeof(VkImageView) );
+            *outPresentImageViews = malloc( 2 * sizeof(VkImageView) );
             
             for(uint32_t index = 0; index < 2; ++index )
             {
@@ -223,7 +223,7 @@ void SetupSwapChain(VkDevice          device,
                                      // pointer to VkImageView handle for returned image view object
                 
                 dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
-                dlg_error("*outPresentImageViews[%u] = %u", index,&(*outPresentImageViews[index]));
+                dlg_error("*outPresentImageViews[%u] = %p", index,&(*outPresentImageViews[index]));
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
         }
@@ -231,6 +231,6 @@ void SetupSwapChain(VkDevice          device,
         //Cleanup (for every "malloc" there must be a "free"
         free(supportsPresent);
         dlg_error("just before END SetupSwapChain");
-        dlg_error("renderpass presentImageViews[0] = %u", &(*outPresentImageViews[0])); 
-        dlg_error("renderpass presentImageViews[1] = %u", &(*outPresentImageViews[1])); 
+        dlg_error("renderpass presentImageViews[0] = %p", &(*outPresentImageViews[0])); 
+        dlg_error("renderpass presentImageViews[1] = %p", &(*outPresentImageViews[1])); 
 }//END SetupSwapChain(..)

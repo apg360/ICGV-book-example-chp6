@@ -20,7 +20,7 @@ void SetupShaderandUniforms(VkDevice          device,
         // Simple Shaders (Vertex & Fragment)
         uint32_t codeSize = 0;
         // assume your file is less than 10,000 bytes
-        char *code        = (char*) malloc( sizeof(char[10000]) );
+        char *code        = malloc( sizeof(char[10000]) );
         FILE* fileHandle  = NULL;
         
         // see Section 6.11 for details on the shaders load your vertex shaders :

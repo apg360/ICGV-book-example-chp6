@@ -24,7 +24,7 @@ static VKAPI_ATTR VkBool32 VKAPI_CALL funcDebugReportCallback
     uint64_t srcObject, size_t location, int32_t msgCode,
     const char *pLayerPrefix, const char *pMsg, void *pUserData)
 {
-    char *message = (char *)malloc(strlen(pMsg) + 100);
+    char *message = malloc(strlen(pMsg) + 100);
     assert(message);
     validation_error = 1;
 

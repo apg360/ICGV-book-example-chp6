@@ -74,6 +74,22 @@
     dlg_asserttm(("tag3"), 3 == 2, "The same goes for asserts");
 */
 
+
+/*
+// https://stackoverflow.com/questions/3536153/c-dynamically-growing-array/3536261
+// https://stackoverflow.com/questions/26831981/should-i-check-if-malloc-was-successful
+// http://www.cplusplus.com/reference/cstdlib/realloc
+// https://overiq.com/c-programming-101/the-realloc-function-in-c
+Array a;
+int i;
+
+initArray(&a, 5);  // initially 5 elements
+for (i = 0; i < 100; i++)
+  insertArray(&a, i);  // automatically resizes as necessary
+printf("%d\n", a.array[9]);  // print 10th element
+printf("%d\n", a.used);  // print number of elements
+freeArray(&a);
+*/
 typedef struct {
   int *array;
   size_t used;
@@ -101,22 +117,6 @@ void freeArray(myArray *a) {
   a->array = NULL;
   a->used = a->size = 0;
 }
-
-/*
-// https://stackoverflow.com/questions/3536153/c-dynamically-growing-array/3536261
-// https://stackoverflow.com/questions/26831981/should-i-check-if-malloc-was-successful
-// http://www.cplusplus.com/reference/cstdlib/realloc
-// https://overiq.com/c-programming-101/the-realloc-function-in-c
-Array a;
-int i;
-
-initArray(&a, 5);  // initially 5 elements
-for (i = 0; i < 100; i++)
-  insertArray(&a, i);  // automatically resizes as necessary
-printf("%d\n", a.array[9]);  // print 10th element
-printf("%d\n", a.used);  // print number of elements
-freeArray(&a);
-*/
 
 
 void println(char *line)

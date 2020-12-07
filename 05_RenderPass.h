@@ -258,7 +258,7 @@ void SetupRenderPass(VkDevice          device,
         
         dlg_warn("fbci.attachmentCount = %u", rpci.attachmentCount);
         // Create a framebuffer per swap-chain imageView:
-        *outFrameBuffers = (VkFramebuffer*)malloc( 2 * sizeof(VkFramebuffer) );
+        *outFrameBuffers = malloc( 2 * sizeof(VkFramebuffer) );
         for( uint32_t index = 0; index < 2; ++index )
         {
             frameBufferAttachments[0] = presentImageViews[index];
