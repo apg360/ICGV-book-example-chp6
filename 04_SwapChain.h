@@ -14,7 +14,7 @@ void SetupSwapChain(VkDevice          device,
                     int*              outHeight,
                     VkSwapchainKHR*   outSwapChain,
                     VkImage**         outPresentImages,
-                    VkImageView**     outPresentImageViews)
+                    VkImageView**    outPresentImageViews)
 {
         // Iterate over each queue to learn whether it supports presenting:
         VkBool32* supportsPresent = malloc (1 * sizeof(VkBool32) );
@@ -24,6 +24,7 @@ void SetupSwapChain(VkDevice          device,
         for (uint32_t index = 0; index < 1; index++) {
             dlg_info("PhysicalDevice Surface Support Presenting : %u", supportsPresent[index]);
         }
+        free(supportsPresent);
         
         // To display something you'll need to create a set of render buffers.
         // These buffers and their properties are called Swap-Chain
@@ -183,8 +184,8 @@ void SetupSwapChain(VkDevice          device,
                                        *outPresentImages);  // pSwapchain
                                        // either NULL or a pointer to an array of VkSwapchainImageKHR structures
             ERR_VULKAN_EXIT( result, "Failed to create swap-chain images");
-            dlg_error("vkGetSwapchainImagesKHR result  =%u",result);
-            dlg_error("*outPresentImages  =%u",*outPresentImages);
+            //dlg_error("vkGetSwapchainImagesKHR result  =%u", translateVkResult(result));
+            //dlg_error("*outPresentImages  =%u",*outPresentImages);
         }
         //--//--//--//
         {
@@ -209,8 +210,8 @@ void SetupSwapChain(VkDevice          device,
                 ivci.subresourceRange.levelCount          = 1;
                 ivci.subresourceRange.baseArrayLayer      = 0;
                 ivci.subresourceRange.layerCount          = 1;
-                ivci.image                                = (*outPresentImages)[index];
-                
+                ivci.image                                = *outPresentImages[index];
+
                 // Create an image view from an existing image
                 VkResult result =
                   vkCreateImageView( device,               // device
@@ -223,14 +224,16 @@ void SetupSwapChain(VkDevice          device,
                                      // pointer to VkImageView handle for returned image view object
                 
                 dlg_error("swapchain vkCreateImageView = %s", translateVkResult(result));
-                dlg_error("*outPresentImageViews[%u] = %p", index,&(*outPresentImageViews[index]));
+                dlg_error("*outPresentImageViews[%u] = %p", index,&(outPresentImageViews[index]) );
                 ERR_VULKAN_EXIT( result, "Could not create ImageView.");
             }//END for loop
         }
+        
+        dlg_error("just before SetupSwapChain return ");
+        dlg_error("renderpass presentImageViews[0] = %p", &outPresentImageViews[0] ); 
+        dlg_error("renderpass presentImageViews[1] = %p", &outPresentImageViews[1] ); 
+        
         //--//--//--//
         //Cleanup (for every "malloc" there must be a "free"
-        free(supportsPresent);
-        dlg_error("just before END SetupSwapChain");
-        dlg_error("renderpass presentImageViews[0] = %p", &(*outPresentImageViews[0])); 
-        dlg_error("renderpass presentImageViews[1] = %p", &(*outPresentImageViews[1])); 
+        
 }//END SetupSwapChain(..)

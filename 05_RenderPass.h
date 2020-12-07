@@ -266,7 +266,7 @@ void SetupRenderPass(VkDevice          device,
               frameBufferAttachments[1] = depthImageView;
             #endif
             
-            dlg_error("renderpass presentImageViews[%u] = %u", index,&presentImageViews[index]);
+            dlg_error("renderpass presentImageViews[%u] = %p", index,&presentImageViews[index]);
             
             // Create a new framebuffer object
             dlg_warn("before vkCreateFramebuffer");
