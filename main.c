@@ -17,6 +17,8 @@
 //# -----------------------------------------------------
 int main(int argc, char *argv[]) {
 
+    // https://www.khronos.org/registry/vulkan/specs/1.2/styleguide.html#markup-word-choices
+
     // Step 1 - Initializing the window
     int             width               = 800;
     int             height              = 600;
@@ -56,10 +58,8 @@ int main(int argc, char *argv[]) {
                     &presentImages,
                     &presentImageViews);
     
-    dlg_error("IN MAIN");
-    dlg_error("presentImageViews[0] = %p", &presentImageViews[0]);
-    dlg_error("presentImageViews[1] = %p", &presentImageViews[1]);
-    exit(1);
+    //dlg_warn("presentImageViews[0] = %p", &presentImageViews[0]); //Debug
+    //dlg_warn("presentImageViews[1] = %p", &presentImageViews[1]); //Debug
     
      // Step 5 - Create Render Pass          (Section 6.6)
      VkRenderPass    renderPass             = NULL;

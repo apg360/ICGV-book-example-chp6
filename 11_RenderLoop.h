@@ -22,7 +22,7 @@ void RenderLoop(VkDevice          device,
                 VkPipeline        pipeline)
 {
     dlg_warn("Welcome RenderLoop");
-    uint32_t nextImageIdx =0;
+    uint32_t nextImageIdx;
     VkResult result = vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
@@ -32,6 +32,7 @@ void RenderLoop(VkDevice          device,
     dlg_error("nextImageIdx = %u  vkresult = %u" , nextImageIdx,result);
     ERR_VULKAN_EXIT( result, "Failed vkAcquireNextImageKHR" );
     
+    exit(1);
     VkCommandBufferBeginInfo beginInfo                         = {};
     beginInfo.sType                                            = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
     beginInfo.flags                                            = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
