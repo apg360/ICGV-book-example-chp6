@@ -1,6 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/*
+https://www.infoq.com/news/2020/08/c2rust-transpiler
+C type systems hide so much relevant information required to make even basic assumptions.
+For example, if we take strncpy declaration, it really requires its two arguments destination and source to be arrays,
+but its signature hides this fact behind the generic notion of a pointer to a character:
+
+char* strncpy (char* destination, const char* source, size_t num);
+
+
+Even though some languages are context-sensitive, context-sensitive grammars are rarely used for describing computer languages.
+For instance, C is slightly context-sensitive because of the way it handles identifiers and type,
+but this context-sensitivity is resolved by a special convention, rather than by introducing context-sensitivity into the grammar.
+http://matt.might.net/articles/grammars-bnf-ebnf
+*/
+
 //characters
 void functionxyz_char(char**     outVariable)
 {

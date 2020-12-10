@@ -22,6 +22,25 @@ void RenderLoop(VkDevice          device,
                 VkPipeline        pipeline)
 {
     dlg_warn("Welcome RenderLoop");
+    
+/*
+https://github.com/chaoticbob/tinyrenderers/blob/810aedb94435c039b88defd11a4a757fb8d51321/samples/src/00_Simple.cpp
+void draw_frame()
+{
+    uint32_t frameIdx = s_frame_count % m_renderer->settings.swapchain.image_count;
+
+    tr_fence* image_acquired_fence = m_renderer->image_acquired_fences[frameIdx];
+    tr_semaphore* image_acquired_semaphore = m_renderer->image_acquired_semaphores[frameIdx];
+    tr_semaphore* render_complete_semaphores = m_renderer->render_complete_semaphores[frameIdx];
+
+    tr_acquire_next_image(m_renderer, image_acquired_semaphore, image_acquired_fence);
+
+    uint32_t swapchain_image_index = m_renderer->swapchain_image_index;
+    tr_render_target* render_target = m_renderer->swapchain_render_targets[swapchain_image_index];
+
+    tr_cmd* cmd = m_cmds[frameIdx];
+*/    
+    
     uint32_t nextImageIdx;
     VkResult result = vkAcquireNextImageKHR( device,
                            swapChain,
