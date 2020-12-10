@@ -41,12 +41,19 @@ void draw_frame()
     tr_cmd* cmd = m_cmds[frameIdx];
 */    
     
-    uint32_t nextImageIdx;
+    uint32_t nextImageIdx =0;
+    
+    //VkFence*     image_acquired_fence       = (VkFence*)calloc(2, sizeof( *(VkFence) ) );
+    VkFence     image_acquired_fence          = calloc(2, sizeof( VkFence ) );
+    //VkSemaphore* image_acquired_semaphore   = m_renderer->image_acquired_semaphores[nextImageIdx];
+    //VkSemaphore* render_complete_semaphores = m_renderer->render_complete_semaphores[nextImageIdx];
+    assert(NULL != image_acquired_fence);
+    
     VkResult result = vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
-                           VK_NULL_HANDLE,
-                           VK_NULL_HANDLE,
+                           VK_NULL_HANDLE,       // VkSemaphore
+                           image_acquired_fence, // VkFence
                            &nextImageIdx );
     dlg_error("nextImageIdx = %u  vkresult = %u" , nextImageIdx,result);
     ERR_VULKAN_EXIT( result, "Failed vkAcquireNextImageKHR" );

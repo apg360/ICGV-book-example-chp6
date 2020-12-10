@@ -158,7 +158,7 @@ void SetupSwapChain(VkDevice          device,
         //--//--//--//
         {
             // Create your images 'double' buffering
-            uint32_t imageCount    = NULL;
+            uint32_t imageCount;
             // You'll need to obtain the array of presentable images associated
             // with the swapchain you created. First, you pass in 'NULL' to 
             // obtain the number of images (i.e., should be 2)
