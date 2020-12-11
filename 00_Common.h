@@ -81,10 +81,9 @@
 // http://www.cplusplus.com/reference/cstdlib/realloc
 // https://overiq.com/c-programming-101/the-realloc-function-in-c
 Array a;
-int i;
 
 initArray(&a, 5);  // initially 5 elements
-for (i = 0; i < 100; i++)
+for (int i = 0; i < 100; i++)
   insertArray(&a, i);  // automatically resizes as necessary
 printf("%d\n", a.array[9]);  // print 10th element
 printf("%d\n", a.used);  // print number of elements
