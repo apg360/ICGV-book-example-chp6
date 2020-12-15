@@ -36,7 +36,7 @@ VkImageView createDepthBuffer(
       imageCreateInfo.sharingMode            = VK_SHARING_MODE_EXCLUSIVE;
       imageCreateInfo.queueFamilyIndexCount  = 0;
       imageCreateInfo.pQueueFamilyIndices    = NULL;
-      imageCreateInfo.initialLayout          = VK_IMAGE_LAYOUT_UNDEFINED;
+      imageCreateInfo.initialLayout          = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;//VK_IMAGE_LAYOUT_UNDEFINED;
       
       // Create a new image object for your depth buffer
       VkResult result =
@@ -154,7 +154,6 @@ void SetupRenderPass(VkDevice          device,
                      VkRenderPass*     outRenderPass,
                      VkFramebuffer**   outFrameBuffers)
 {
-        dlg_warn("Welcome SetupRenderPass");
         // The render-pass defines the role of framebuffer resources
         
         //Possibilities :
@@ -184,8 +183,8 @@ void SetupRenderPass(VkDevice          device,
         pass[0].storeOp                     = VK_ATTACHMENT_STORE_OP_STORE;
         pass[0].stencilLoadOp               = VK_ATTACHMENT_LOAD_OP_DONT_CARE;
         pass[0].stencilStoreOp              = VK_ATTACHMENT_STORE_OP_DONT_CARE;
-        pass[0].initialLayout               = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
-        pass[0].finalLayout                 = VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        pass[0].initialLayout               = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;//VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
+        pass[0].finalLayout                 = VK_IMAGE_LAYOUT_PRESENT_SRC_KHR;//VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL;
         
         VkAttachmentReference car           = {};
         car.attachment                      = 0;//COUNT_ARRAY_ELEMS(pass); // color (+depth if def DEPTH_BUFFER)
@@ -226,7 +225,6 @@ void SetupRenderPass(VkDevice          device,
         rpci.subpassCount                   = 1;
         rpci.pSubpasses                     = &subpass;
         
-        dlg_warn("before vkCreateRenderPass");
         VkResult result =
           vkCreateRenderPass ( device,
                                // logical device that creates the render pass
@@ -238,7 +236,6 @@ void SetupRenderPass(VkDevice          device,
                                // pointer VkRenderPass handle in which the resulting render pass object is returned
         
         ERR_VULKAN_EXIT( result, "Failed to create renderpass" );
-        dlg_warn("after vkCreateRenderPass");
         
         #ifdef DEPTH_BUFFER
           VkImageView frameBufferAttachments[2] = {}; //presentImageViews[0],depthImageView
@@ -256,7 +253,6 @@ void SetupRenderPass(VkDevice          device,
         fbci.height                   = height;
         fbci.layers                   = 1;
         
-        dlg_warn("fbci.attachmentCount = %u", rpci.attachmentCount);
         // Create a framebuffer per swap-chain imageView:
         *outFrameBuffers = malloc( 2 * sizeof(VkFramebuffer) );
         for( uint32_t index = 0; index < 2; ++index )
@@ -266,10 +262,9 @@ void SetupRenderPass(VkDevice          device,
               frameBufferAttachments[1] = depthImageView;
             #endif
             
-            dlg_error("renderpass presentImageViews[%u] = %p", index,&presentImageViews[index]);
+            dlg_info("renderpass presentImageViews[%u] address = %p", index,&presentImageViews[index]);
             
             // Create a new framebuffer object
-            dlg_warn("before vkCreateFramebuffer");
             result =
               vkCreateFramebuffer( device,                     // device
                                    // logical device that creates the framebuffer
@@ -280,8 +275,6 @@ void SetupRenderPass(VkDevice          device,
                                    &(*outFrameBuffers)[index]  // pFramebuffer
                                    // pointer to returned VkFramebuffer handle for the framebuffer object
                                    );
-            dlg_warn("after vkCreateFramebuffer");
-            dlg_warn("renderpass vkCreateFramebuffer = %s", translateVkResult(result));
             ERR_VULKAN_EXIT( result, "Failed to create framebuffer." );
         }//END FOR LOOP index
     

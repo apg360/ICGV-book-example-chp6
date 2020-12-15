@@ -21,44 +21,32 @@ void RenderLoop(VkDevice          device,
                 VkPipelineLayout  pipelineLayout,
                 VkPipeline        pipeline)
 {
-    dlg_warn("Welcome RenderLoop");
+    VkResult result;
     
-/*
-https://github.com/chaoticbob/tinyrenderers/blob/810aedb94435c039b88defd11a4a757fb8d51321/samples/src/00_Simple.cpp
-void draw_frame()
-{
-    uint32_t frameIdx = s_frame_count % m_renderer->settings.swapchain.image_count;
-
-    tr_fence* image_acquired_fence = m_renderer->image_acquired_fences[frameIdx];
-    tr_semaphore* image_acquired_semaphore = m_renderer->image_acquired_semaphores[frameIdx];
-    tr_semaphore* render_complete_semaphores = m_renderer->render_complete_semaphores[frameIdx];
-
-    tr_acquire_next_image(m_renderer, image_acquired_semaphore, image_acquired_fence);
-
-    uint32_t swapchain_image_index = m_renderer->swapchain_image_index;
-    tr_render_target* render_target = m_renderer->swapchain_render_targets[swapchain_image_index];
-
-    tr_cmd* cmd = m_cmds[frameIdx];
-*/    
+    VkFence*     image_acquired_fence          = malloc(2 * sizeof( VkFence ) );
+    
+    VkFenceCreateInfo fenceInfo = {};
+    fenceInfo.sType = VK_STRUCTURE_TYPE_FENCE_CREATE_INFO;
+    fenceInfo.flags = VK_FENCE_CREATE_SIGNALED_BIT;
+    
+    for( uint32_t index = 0; index < 2; ++index )
+    {
+        result = vkCreateFence( device,&fenceInfo,NULL, &image_acquired_fence[index] );
+        ERR_VULKAN_EXIT( result, "Failed to create Fence");
+        vkResetFences(device , 1 , &image_acquired_fence[index]);
+    }
+    
     
     uint32_t nextImageIdx =0;
-    
-    //VkFence*     image_acquired_fence       = (VkFence*)calloc(2, sizeof( *(VkFence) ) );
-    VkFence     image_acquired_fence          = calloc(2, sizeof( VkFence ) );
-    //VkSemaphore* image_acquired_semaphore   = m_renderer->image_acquired_semaphores[nextImageIdx];
-    //VkSemaphore* render_complete_semaphores = m_renderer->render_complete_semaphores[nextImageIdx];
-    assert(NULL != image_acquired_fence);
-    
-    VkResult result = vkAcquireNextImageKHR( device,
+    result = vkAcquireNextImageKHR( device,
                            swapChain,
                            UINT64_MAX,
                            VK_NULL_HANDLE,       // VkSemaphore
-                           image_acquired_fence, // VkFence
+                           *image_acquired_fence, // VkFence
                            &nextImageIdx );
-    dlg_error("nextImageIdx = %u  vkresult = %u" , nextImageIdx,result);
+    
     ERR_VULKAN_EXIT( result, "Failed vkAcquireNextImageKHR" );
     
-    exit(1);
     VkCommandBufferBeginInfo beginInfo                         = {};
     beginInfo.sType                                            = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
     beginInfo.flags                                            = VK_COMMAND_BUFFER_USAGE_ONE_TIME_SUBMIT_BIT;
@@ -166,8 +154,6 @@ void draw_frame()
     submitInfo.pSignalSemaphores      = VK_NULL_HANDLE;
     
     // Submit command buffer (drawing)
-    dlg_warn("calling vkQueueSubmit");
-    //dlg_warn("commandBuffer = %u",&commandBuffer);
     vkQueueSubmit( presentQueue,
                    // the queue that the command buffers will be submitted to
                    1,
@@ -183,7 +169,6 @@ void draw_frame()
     
     vkDestroyFence( device, renderFence, NULL );
     
-    dlg_warn("calling vkQueuePresentKHR");
     // Present the backbuffer
     VkPresentInfoKHR presentInfo      = {};
     presentInfo.sType                 = VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
@@ -208,5 +193,4 @@ void draw_frame()
         glVertex3f(-0.8, -0.8, 0.0);
     glEnd();
     */
-    dlg_warn("END RenderLoop");
 }//END RenderLoop(..)
