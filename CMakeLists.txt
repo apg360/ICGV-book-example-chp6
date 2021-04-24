@@ -53,7 +53,7 @@ endif()
 if(MATH_LIBRARY)
   get_filename_component(MATH_LIB_DIR ${MATH_LIBRARY} PATH)
   link_directories(${MATH_LIB_DIR})
-   message(STATUS "libm FOUND ${MATH_LIBRARY}")
+  message(STATUS "libm FOUND ${MATH_LIBRARY}")
   # Name the library both with a full path and as "-lm" to
   # activate the link type switching code for both cases.
   # If the second one links shared then the link will fail.
