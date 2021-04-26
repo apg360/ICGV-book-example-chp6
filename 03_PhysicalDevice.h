@@ -2,7 +2,7 @@
 #pragma once // include guard
 
 //# -----------------------------------------------------
-// Step 3 - Initialize Vulkan
+// Step 3 - Find/Create Device and Set-up your selected device
 //
 //________//________// START Variables and Functions before main function of this step
 //________//________// END Variables and Functions before main function of this step

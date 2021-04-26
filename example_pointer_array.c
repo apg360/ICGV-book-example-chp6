@@ -61,6 +61,17 @@ int main() {
 
     char**  reference to character array
     char*** reference to string array
+    
+    The last digit is number of items
+    const char *a[2];
+	a[0] = "blah";
+	a[1] = "hmm";
+	
+	Here the last digit become number of character for each item
+	char a[2][14];
+	strcpy(a[0], "blah");
+	strcpy(a[1], "hmm");
+
     */
     
     char*   theVariablechar       = NULL;

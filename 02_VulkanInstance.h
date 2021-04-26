@@ -82,7 +82,7 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
     uint32_t version = volkGetInstanceVersion();
     dlg_info("Volk version : %u", version);
     dlg_info("Vulkan version %d.%d.%d initialized.", VK_VERSION_MAJOR(version), VK_VERSION_MINOR(version), VK_VERSION_PATCH(version));
-
+    
     if (glfwVulkanSupported())
     {
         dlg_info("glfw Vulkan is available, at least for compute");
@@ -98,8 +98,7 @@ void SetupVulkanInstance(GLFWwindow*    windowHandle,
                                           // pointer to the number of layer properties available
                                           NULL);  // VkLayerProperties*
                                           // pointer to an array of VkLayerProperties structures
-
-
+    
     assert( VK_SUCCESS == result );
     assert( count > 0 );
     dlg_info("Number of layer properties available : %u", count);
